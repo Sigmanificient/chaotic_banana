@@ -1,0 +1,7 @@
+# IDE configuration folder
+.idea
+
+
+# python environment
+*.egg-info
+venv
