@@ -1,5 +1,5 @@
 #!/usr/bin/tclsh
 
 set rules {
-  advanced/line_break_at_the_end
+  advanced/3_line_break_at_the_end
 }
