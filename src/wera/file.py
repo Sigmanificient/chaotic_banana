@@ -1,8 +1,12 @@
 from __future__ import annotations
 
-from pathlib import Path
 from enum import IntFlag, auto
 from os import path
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from typing import List, Tuple
+    from vera import TokenName, TokenVector
 
 import vera
 
@@ -55,3 +59,22 @@ class File:
     @property
     def lines(self) -> vera.StringVector:
         return vera.getAllLines(self.full_name)
+
+    def get_all_tokens(self, token_names: List[TokenName]) -> TokenVector:
+        return vera.getTokens(self.full_name, 1, 0, -1, -1, token_names)
+
+    def get_tokens(
+        self, token_names: List[TokenName],
+        lines: Tuple[int, int], columns: Tuple[int, int]
+    ) -> TokenVector:
+        line_start, line_end = lines
+        column_start, column_end = columns
+
+        return vera.getTokens(
+            self.full_name,
+            line_start,
+            column_start,
+            line_end,
+            column_end,
+            token_names
+        )
