@@ -40,7 +40,7 @@ cache = set()
 def pytest_collect_file(parent, file_path: pathlib.PosixPath):
     parts = file_path.parts
     if 'fixtures' in parts:
-        cat, rule, *_ = parts[:-4]
+        cat, rule, *_ = parts[-4:]
         p = f"{cat}/{rule}"
         if p not in cache:
             cache.add(p)
