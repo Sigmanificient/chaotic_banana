@@ -10,9 +10,9 @@ if TYPE_CHECKING:
 
 
 @rule(
-    description="(Minor) A-3: Missing line break at end of file",
-    type_filter=FileType.project()
+    description="(Major) C-3: Use of forbidden goto statement",
+    type_filter=FileType.source()
 )
 def check(file: File) -> Iterator[Tuple[File, int]]:
-    if file.lines[-1]:
-        yield file, len(file.lines)
+    for goto_token in file.get_all_tokens(['goto']):
+        yield file, goto_token.line
