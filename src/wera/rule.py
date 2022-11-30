@@ -6,12 +6,14 @@ from wera import FileType, File
 def rule(description: str, type_filter: FileType):
 
     def decorator(func):
-        File.set_reported_rule(description)
 
         for filepath in vera.getSourceFileNames():
             file = File(filepath)
 
-            if file.type & type_filter:
-                func(file)
+            if not file.type & type_filter:
+                continue
+
+            for file, line in func(file):
+                vera.report(file.name, line, description)
 
     return decorator

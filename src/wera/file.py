@@ -13,7 +13,7 @@ class FileType(IntFlag):
     OTHER = auto()
 
     @classmethod
-    def ALL(cls) -> FileType:
+    def all(cls) -> FileType:
         return (
             cls.BINARY | cls.HEADER
             | cls.SOURCE | cls.MAKEFILE
@@ -22,7 +22,6 @@ class FileType(IntFlag):
 
 
 class File:
-    __report_message = "not set"
 
     def __init__(self, filename):
         name, ext = path.splitext(filename)
@@ -31,10 +30,6 @@ class File:
 
         self.type = self.__get_file_type(name, ext)
         self.full_name = filename
-
-    @classmethod
-    def set_reported_rule(cls, message: str):
-        cls.__report_message = message
 
     @staticmethod
     def __get_file_type(name: str, ext: str) -> FileType:
@@ -47,9 +42,6 @@ class File:
                 return FileType.SOURCE
             case (_, _):
                 return FileType.OTHER
-
-    def report(self, line: int):
-        vera.report(self.full_name, line, self.__report_message)
 
     def __repr__(self) -> str:
         return self.full_name
