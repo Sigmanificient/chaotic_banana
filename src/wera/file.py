@@ -39,7 +39,7 @@ class FileType(IntFlag):
         if file.name == 'Makefile':
             return cls.MAKEFILE
 
-        return cls.BINARY if vera.isBinary(file.name) else cls.OTHER
+        return cls.BINARY if vera.isBinary(file.full_name) else cls.OTHER
 
 
 class File:
@@ -50,8 +50,8 @@ class File:
         self.name = name
         self.ext = ext
 
-        self.type = FileType.resolve(self)
         self.full_name = filename
+        self.type = FileType.resolve(self)
 
     def __repr__(self) -> str:
         return self.full_name
