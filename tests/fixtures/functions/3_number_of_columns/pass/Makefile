@@ -1,0 +1,1 @@
+THIS_IS_A_VERY_LONG_VARIABLE_NAME = this_is_a_very_long_value_that_is_80_chars_
