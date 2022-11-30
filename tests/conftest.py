@@ -7,13 +7,15 @@ import subprocess
 class RuleFile(pytest.File):
 
     def collect(self):
-        for filename in os.listdir(f"{self.path}/fail"):
-            file_path = f"{self.path}/fail/{filename}"
-            if os.path.isfile(file_path):
-                yield RuleItem.from_parent(self, name=file_path)
+        yield from self.check_file("fail")
+        yield from self.check_file("pass")
 
-        for filename in os.listdir(f"{self.path}/pass"):
-            file_path = f"{self.path}/pass/{filename}"
+    def check_file(self, dir_type):
+        if not os.path.isdir(f"{self.path}/{dir_type}"):
+            return
+
+        for filename in os.listdir(f"{self.path}/{dir_type}"):
+            file_path = f"{self.path}/{dir_type}/{filename}"
             if os.path.isfile(file_path):
                 yield RuleItem.from_parent(self, name=file_path)
 
