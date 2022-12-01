@@ -11,8 +11,8 @@ if TYPE_CHECKING:
 
 @rule(
     description="(Major) C-3: Use of forbidden goto statement",
-    type_filter=FileType.source()
+    type_filter=FileType.source(),
 )
 def check(file: File) -> Iterator[Tuple[File, int]]:
-    for goto_token in file.get_all_tokens(['goto']):
+    for goto_token in file.get_all_tokens(["goto"]):
         yield file, goto_token.line

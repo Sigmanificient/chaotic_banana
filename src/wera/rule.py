@@ -4,7 +4,6 @@ from wera import FileType, File
 
 
 def rule(description: str, type_filter: FileType):
-
     def decorator(func):
 
         for filepath in vera.getSourceFileNames():

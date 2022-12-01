@@ -5,7 +5,6 @@ import subprocess
 
 
 class RuleFile(pytest.File):
-
     def collect(self):
         yield from self.check_file("fail")
         yield from self.check_file("pass")
@@ -21,14 +20,11 @@ class RuleFile(pytest.File):
 
 
 class RuleItem(pytest.Item):
-
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
     def runtest(self):
-        out = subprocess.getoutput(
-            f"vera++ --profile chaos --root src -d {self.name}"
-        )
+        out = subprocess.getoutput(f"vera++ --profile chaos --root src -d {self.name}")
         if "fail" in self.name:
             assert out != ""
 
@@ -41,11 +37,9 @@ cache = set()
 
 def pytest_collect_file(parent, file_path: pathlib.PosixPath):
     parts = file_path.parts
-    if 'fixtures' in parts:
+    if "fixtures" in parts:
         cat, rule, *_ = parts[-4:]
         p = f"{cat}/{rule}"
         if p not in cache:
             cache.add(p)
-            return RuleFile.from_parent(
-                parent, path=file_path.parent.parent
-            )
+            return RuleFile.from_parent(parent, path=file_path.parent.parent)

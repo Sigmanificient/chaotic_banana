@@ -14,11 +14,11 @@ TAB_SIZE: Final[int] = 4
 
 @rule(
     description="(Major) F-3: Exceeding the 80 column limit",
-    type_filter=FileType.source()
+    type_filter=FileType.source(),
 )
 def check(file: File) -> Iterator[Tuple[File, int]]:
     for idx, line in enumerate(file.lines):
-        line_no_tab = line.replace('\t', ' ' * TAB_SIZE)
+        line_no_tab = line.replace("\t", " " * TAB_SIZE)
 
         if len(line_no_tab) > 80:
             yield file, idx

@@ -32,18 +32,18 @@ class FileType(IntFlag):
 
     @classmethod
     def resolve(cls, file: File) -> FileType:
-        if file.ext == '.h':
+        if file.ext == ".h":
             return cls.HEADER
-        if file.ext in '.c':
+        if file.ext in ".c":
             return cls.C
-        if file.name == 'Makefile':
+        if file.name == "Makefile":
             return cls.MAKEFILE
 
         return cls.BINARY if vera.isBinary(file.full_name) else cls.OTHER
 
 
 class File:
-    __slots__ = ('name', 'ext', 'type', 'full_name')
+    __slots__ = ("name", "ext", "type", "full_name")
 
     def __init__(self, filename):
         name, ext = path.splitext(filename)
@@ -64,17 +64,14 @@ class File:
         return vera.getTokens(self.full_name, 1, 0, -1, -1, token_names)
 
     def get_tokens(
-        self, token_names: List[TokenName],
-        lines: Tuple[int, int], columns: Tuple[int, int]
+        self,
+        token_names: List[TokenName],
+        lines: Tuple[int, int],
+        columns: Tuple[int, int],
     ) -> TokenVector:
         line_start, line_end = lines
         column_start, column_end = columns
 
         return vera.getTokens(
-            self.full_name,
-            line_start,
-            column_start,
-            line_end,
-            column_end,
-            token_names
+            self.full_name, line_start, column_start, line_end, column_end, token_names
         )

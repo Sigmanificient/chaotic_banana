@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 
 @rule(
     description="(Minor) A-3: Missing line break at end of file",
-    type_filter=FileType.project()
+    type_filter=FileType.project(),
 )
 def check(file: File) -> Iterator[Tuple[File, int]]:
     if file.lines[-1]:
